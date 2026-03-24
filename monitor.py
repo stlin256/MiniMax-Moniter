@@ -34,8 +34,18 @@ class UsageMonitor:
         self.current_data = model_data
         self.error_message = None
         
-        usage = model_data.get("current_interval_usage_count", 0)
-        self.history.append((time.time(), usage))
+        # Ensure it is an integer
+        try:
+            usage = int(model_data.get("current_interval_usage_count", 0))
+            self.history.append((time.time(), usage))
+            
+            # Debug logging
+            with open("monitor_debug.log", "a") as f:
+                f.write(f"{datetime.datetime.now()}: usage={usage}, history_len={len(self.history)}\n")
+        except Exception as e:
+            with open("monitor_debug.log", "a") as f:
+                f.write(f"{datetime.datetime.now()}: Error parsing usage: {e}\n")
+            
         return True
 
     def get_rpm(self) -> int:
@@ -49,16 +59,17 @@ class UsageMonitor:
         if time_diff < 1.0:
             return 0
             
-        usage_diff = max(0, end_usage - start_usage)
+        # usage decreases as it represents remains
+        usage_diff = abs(end_usage - start_usage)
         rpm = (usage_diff / time_diff) * 60
         return int(round(rpm))
 
     def get_usage_str(self) -> str:
         if not self.current_data:
             return "N/A"
-        used = self.current_data.get("current_interval_usage_count", 0)
+        # The API's usage_count actually seems to represent REMAINS
+        remains = self.current_data.get("current_interval_usage_count", 0)
         total = self.current_data.get("current_interval_total_count", 0)
-        remains = max(0, total - used)
         return f"{remains} / {total}"
 
     def get_interval_str(self) -> str:

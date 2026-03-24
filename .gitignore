@@ -19,3 +19,4 @@ config.b64
 *.exe
 __pycache__/
 *.pyc
+*.log
