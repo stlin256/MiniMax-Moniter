@@ -1,0 +1,17 @@
+# Keys and secrets
+.env
+*.key
+*.pem
+
+# IDEs
+.vscode/
+.idea/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Project specific
+node_modules/
+dist/
+build/
