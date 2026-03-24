@@ -6,14 +6,23 @@ from monitor import UsageMonitor
 from minimax_api import MiniMaxAPI
 
 def main(page: ft.Page):
+    # App Settings
     page.title = "MiniMax Monitor"
     page.window_width = 300
     page.window_height = 200
+    page.window_min_width = 300
+    page.window_min_height = 200
+    page.window_max_width = 300
+    page.window_max_height = 200
     page.window_resizable = False
     page.window_always_on_top = True
     page.window_bgcolor = "transparent"
     page.bgcolor = "transparent"
+    
+    # Hide title bar and frame for modern look
     page.window_frameless = True
+    page.window_title_bar_hidden = True
+    page.window_title_bar_buttons_hidden = True
     
     # Data
     api_key = load_api_key()
@@ -53,7 +62,7 @@ def main(page: ft.Page):
 
     def toggle_config(e):
         config_container.visible = not config_container.visible
-        main_container.visible = not config_container.visible
+        main_view_container.visible = not config_container.visible
         page.update()
 
     def save_config(e):
@@ -66,7 +75,8 @@ def main(page: ft.Page):
         toggle_config(None)
 
     # UI Containers
-    main_container = ft.Container(
+    # Use Padding and Border with new syntax
+    main_view_container = ft.Container(
         content=ft.WindowDragArea(
             content=ft.Column([
                 ft.Row([
@@ -95,12 +105,12 @@ def main(page: ft.Page):
                 ], spacing=10, alignment="center", expand=True),
             ], spacing=0),
         ),
-        padding=ft.padding.only(left=15, right=15, top=5, bottom=15),
+        padding=ft.Padding(15, 5, 15, 15), # (left, top, right, bottom)
         width=300,
         height=200,
         bgcolor="#aa121212", 
         border_radius=24,
-        border=ft.border.all(1, "white10"),
+        border=ft.Border(ft.BorderSide(1, "white10"), ft.BorderSide(1, "white10"), ft.BorderSide(1, "white10"), ft.BorderSide(1, "white10")),
         blur=ft.Blur(10, 10, "outer"), 
     )
 
@@ -109,7 +119,7 @@ def main(page: ft.Page):
             ft.Text("Configuration", size=16, weight="bold", color="white"),
             api_key_input,
             model_dropdown,
-            ft.ElevatedButton("Save & Apply", on_click=save_config, bgcolor="cyan700", color="white"),
+            ft.Button(content=ft.Text("Save & Apply"), on_click=save_config, bgcolor="cyan700", color="white"),
             ft.TextButton(content=ft.Text("Back", size=12), on_click=toggle_config),
         ], spacing=10),
         padding=20,
@@ -122,7 +132,7 @@ def main(page: ft.Page):
 
     page.add(
         ft.Stack([
-            main_container,
+            main_view_container,
             config_container
         ])
     )
@@ -147,4 +157,5 @@ def main(page: ft.Page):
     threading.Thread(target=monitoring_loop, daemon=True).start()
 
 if __name__ == "__main__":
+    # Use flet.app(target=main) or flet.run(main) if available
     ft.app(target=main)
