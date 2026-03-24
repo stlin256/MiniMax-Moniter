@@ -20,3 +20,4 @@ config.b64
 __pycache__/
 *.pyc
 *.log
+release_build/ 
