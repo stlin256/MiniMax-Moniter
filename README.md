@@ -16,6 +16,7 @@ A modern, real-time quota monitor for MiniMax API developers. Features a semi-tr
 - **Immersive Interaction**: Buttons, borders, and resize handles are hidden by default and reveal smoothly on hover.
 - **Non-linear Animations**: Smooth transition animations for the UI elements using `InOutQuad` easing curves.
 - **Intelligent Cycles**: Automatically handles MiniMax-M* 5-hour rolling windows and other models' 24-hour refresh cycles.
+- **Usage History**: Automatically saves all request results to `usage_history.csv` for audit and tracking, indexed by the last 6 digits of your API Key.
 - **Smart Persistence**: Remembers your API Key, display mode (Used/Remains), opacity, window position, and size.
 - **System Tray**: Runs in the background with a system tray icon for continuous monitoring.
 
@@ -55,6 +56,7 @@ A modern, real-time quota monitor for MiniMax API developers. Features a semi-tr
 - **沉浸式交互**：设置按钮、外框线及缩放手柄平时完全隐藏，鼠标移入时优雅浮现。
 - **非线性动画**：UI 元素移动采用 `InOutQuad` 缓动曲线，交互极其丝滑。
 - **自动处理周期**：自动识别 MiniMax-M* 的 5 小时滚动窗口及其它模型的 24 小时刷新周期。
+- **用量历史存证**：自动将所有请求结果保存至 `usage_history.csv`，并以 API Key 后 6 位作为索引，方便追溯审计。
 - **配置持久化**：自动记忆 API Key、显示模式（已用/余量）、透明度、窗口坐标及尺寸。
 - **系统托盘**：支持最小化至托盘后台运行，点击关闭不中断监控。
 

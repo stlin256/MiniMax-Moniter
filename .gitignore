@@ -20,5 +20,6 @@ config.b64
 __pycache__/
 *.pyc
 *.log
+*.csv
 release_build/ 
 venv/  
